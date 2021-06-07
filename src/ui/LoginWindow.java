@@ -1,6 +1,6 @@
 package ui;
 
-import delegates.LoginWindowDelegate;
+import delegates.LoginDelegate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +15,13 @@ public class LoginWindow extends JFrame implements ActionListener {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
-    private LoginWindowDelegate delegate;
+    private LoginDelegate delegate;
 
     public LoginWindow() {
         super("Travel Agency Login");
     }
 
-    public void showFrame(LoginWindowDelegate delegate) {
+    public void showFrame(LoginDelegate delegate) {
         this.delegate = delegate;
 
         JLabel usernameLabel = new JLabel("Enter username: ");

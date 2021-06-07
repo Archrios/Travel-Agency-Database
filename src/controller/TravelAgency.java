@@ -1,12 +1,18 @@
 package controller;
 
 import database.DatabaseConnectionHandler;
-import delegates.LoginWindowDelegate;
+import delegates.BookingDelegate;
+import delegates.LoginDelegate;
+import model.Booking;
+import ui.BookingWindow;
 import ui.LoginWindow;
 
-public class TravelAgency implements LoginWindowDelegate {
+import java.util.List;
+
+public class TravelAgency implements LoginDelegate, BookingDelegate {
     private DatabaseConnectionHandler dbHandler;
     private LoginWindow loginWindow = null;
+    private BookingWindow bookingWindow = null;
 
     public TravelAgency() {
         dbHandler = new DatabaseConnectionHandler();
@@ -24,12 +30,26 @@ public class TravelAgency implements LoginWindowDelegate {
         if (didConnect) {
             loginWindow.dispose();
             System.out.println("Success!");
-//            TerminalTransactions transaction = new TerminalTransactions();
+
+            bookingWindow = new BookingWindow();
+            bookingWindow.setup(this);
 //            transaction.setupDatabase(this);
 //            transaction.showMainMenu(this);
         } else {
             loginWindow.handleLoginFailed();
         }
+    }
+
+    public List<Booking> getBookings() {
+        return null;
+    }
+
+    public boolean addBooking(Booking b) {
+        return false;
+    }
+
+    public boolean removeBooking() {
+        return false;
     }
 
     public void closeHandler() {
