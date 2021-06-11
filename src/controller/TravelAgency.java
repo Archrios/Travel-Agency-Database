@@ -4,6 +4,7 @@ import database.DatabaseConnectionHandler;
 import delegates.BookingDelegate;
 import delegates.LoginDelegate;
 import model.Booking;
+import model.Customer;
 import ui.BookingWindow;
 import ui.LoginWindow;
 
@@ -13,6 +14,7 @@ public class TravelAgency implements LoginDelegate, BookingDelegate {
     private DatabaseConnectionHandler dbHandler;
     private LoginWindow loginWindow = null;
     private BookingWindow bookingWindow = null;
+    private Customer user = null;
 
     public TravelAgency() {
         dbHandler = new DatabaseConnectionHandler();
