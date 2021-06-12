@@ -3,8 +3,7 @@ package controller;
 import database.DatabaseConnectionHandler;
 import delegates.BookingDelegate;
 import delegates.LoginDelegate;
-import model.Booking;
-import model.Customer;
+import model.*;
 import ui.BookingWindow;
 import ui.LoginWindow;
 
