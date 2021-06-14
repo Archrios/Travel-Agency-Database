@@ -3,6 +3,7 @@ package database;
 import model.Customer;
 
 import java.sql.*;
+import model.*;
 
 public class DatabaseConnectionHandler {
     private static final String MYSQL_URL = "jdbc:mysql://localhost/traveldb";
@@ -25,6 +26,25 @@ public class DatabaseConnectionHandler {
         }
     }
 
+    public void insertVacationPlan(VacationPlan vp){
+        try{
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO VacationPlan VALUES (?,?,?,?)");
+            ps.setInt(1, vp.getPlanID());
+            ps.setDate(2, (Date) vp.getStartDate());
+            ps.setDate(3, (Date) vp.getEndDate());
+            ps.setDouble(4,vp.getPrice());
+            ps.executeUpdate();
+            connection.commit();
+
+            ps.close();
+
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+    }
+
+
     public boolean login(String email, String password) {
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT Email FROM Customer_Login WHERE Email = ? && Password = ?");
@@ -44,6 +64,14 @@ public class DatabaseConnectionHandler {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             return false;
+        }
+    }
+
+    private void rollbackConnection() {
+        try  {
+            connection.rollback();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
     }
 
