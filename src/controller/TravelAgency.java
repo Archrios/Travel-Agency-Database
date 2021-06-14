@@ -1,15 +1,16 @@
 package controller;
 
 import database.DatabaseConnectionHandler;
-import delegates.BookingDelegate;
+import delegates.QueryDelegate;
 import delegates.LoginDelegate;
 import model.*;
 import ui.BookingWindow;
 import ui.LoginWindow;
 
+import java.util.Date;
 import java.util.List;
 
-public class TravelAgency implements LoginDelegate, BookingDelegate {
+public class TravelAgency implements LoginDelegate, QueryDelegate {
     private DatabaseConnectionHandler dbHandler;
     private LoginWindow loginWindow = null;
     private BookingWindow bookingWindow = null;
@@ -40,6 +41,23 @@ public class TravelAgency implements LoginDelegate, BookingDelegate {
             loginWindow.handleLoginFailed();
         }
     }
+
+
+    public boolean insertVacationPlan(int planID, Date startDate, Date endDate, double price){return false;}
+    public boolean deleteCustomer(String email){return false;}
+    public boolean updateReview(int reviewID){return false;}
+    public List<VacationPlan> selectVacationPrice(double price){return null;}
+    public List<Integer> selectVacationDestination(String country){return null;}
+    public List<List<String>> selectCruise(int rating){return null;}
+    public double selectReviewAverage(int planID){return 0;}
+    public List<List<Integer>> eventCount(){return null;}
+    public List<VacationPlan> vacationBookedByAll(){return null;}
+
+
+
+
+
+
 
     public List<Booking> getBookings() {
         return null;

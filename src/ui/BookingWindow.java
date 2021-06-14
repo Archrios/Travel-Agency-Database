@@ -1,6 +1,6 @@
 package ui;
 
-import delegates.BookingDelegate;
+import delegates.QueryDelegate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,13 +8,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class BookingWindow extends JFrame {
-    private BookingDelegate delegate;
+    private QueryDelegate delegate;
 
     public BookingWindow() {
         super("Bookings");
     }
 
-    public void setup(BookingDelegate delegate) {
+    public void setup(QueryDelegate delegate) {
         this.delegate = delegate;
 
         setPreferredSize(new Dimension(600, 9*80));
