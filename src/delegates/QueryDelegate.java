@@ -1,7 +1,5 @@
 package delegates;
 
-import model.Booking;
-
 import java.util.Date;
 import java.util.List;
 import model.*;

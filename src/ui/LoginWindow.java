@@ -99,7 +99,7 @@ public class LoginWindow extends JFrame implements ActionListener {
 
     public void handleLoginFailed() {
         passwordField.setText("");
-        System.out.println("Failed!");
+        JOptionPane.showMessageDialog(this,"Login Failed");
     }
 
     @Override

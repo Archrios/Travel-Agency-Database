@@ -26,7 +26,6 @@ public class TravelAgency implements LoginDelegate, QueryDelegate {
     }
 
     public void login(String email, String password) {
-        System.out.println("email: " + email + ", pword: " + password);
         boolean didConnect = dbHandler.login(email, password);
 
         if (didConnect) {
@@ -35,8 +34,6 @@ public class TravelAgency implements LoginDelegate, QueryDelegate {
 
             bookingWindow = new BookingWindow();
             bookingWindow.setup(this);
-//            transaction.setupDatabase(this);
-//            transaction.showMainMenu(this);
         } else {
             loginWindow.handleLoginFailed();
         }
