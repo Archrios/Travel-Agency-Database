@@ -28,6 +28,11 @@ public class InputWindow extends JFrame  {
         for (int i = 0; i < inputArray.length; i++) {
             JLabel fieldLabel = new JLabel(labelArray[i] + ": ");
             inputFields[i] = new JTextField(TEXT_FIELD_WIDTH);
+            if (inputArray[i] == FieldType.DATE) {
+                new GhostText(inputFields[i], "YYYY-MM-DD");
+            } else if (inputArray[i] == FieldType.DOUBLE) {
+                new GhostText(inputFields[i], "0.00");
+            }
 
             // place the label
             c.gridwidth = GridBagConstraints.RELATIVE;

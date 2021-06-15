@@ -11,7 +11,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -40,20 +39,28 @@ public class BookingWindow extends JFrame implements ActionListener {
         this.delegate = delegate;
 
         JPanel mainPanel = new JPanel();
-        mainPanel.setPreferredSize(new Dimension(600, 9*80));
+        GridBagLayout gb = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        mainPanel.setLayout(gb);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         for (int i = 0; i < 9; i++) {
             JLabel label = new JLabel(buttonLabels[i]);
             JButton button = new JButton();
-            button.setPreferredSize(new Dimension(600,75));
+            button.setPreferredSize(new Dimension(400,50));
             button.add(label);
             button.addActionListener(this);
             button.setActionCommand(Integer.toString(i));
+
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.insets = new Insets(3, 10, 3, 10);
+            c.anchor = GridBagConstraints.CENTER;
+            gb.setConstraints(button, c);
+
             mainPanel.add(button);
         }
         setContentPane(mainPanel);
 
-        setPreferredSize(new Dimension(600, 9*80));
         setResizable(false);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
