@@ -7,6 +7,7 @@ import model.*;
 import ui.BookingWindow;
 import ui.LoginWindow;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,20 +41,33 @@ public class TravelAgency implements LoginDelegate, QueryDelegate {
     }
 
 
-    public boolean insertVacationPlan(int planID, Date startDate, Date endDate, double price){return false;}
-    public boolean deleteCustomer(String email){return false;}
-    public boolean updateReview(int reviewID){return false;}
-    public List<VacationPlan> selectVacationPrice(double price){return null;}
-    public List<Integer> selectVacationDestination(String country){return null;}
-    public List<List<String>> selectCruise(int rating){return null;}
-    public double selectReviewAverage(int planID){return 0;}
-    public List<List<Integer>> eventCount(){return null;}
-    public List<VacationPlan> vacationBookedByAll(){return null;}
-
-
-
-
-
+    public boolean insertVacationPlan(int planID, Date startDate, Date endDate, double price){
+        return dbHandler.insertVacationPlan(new VacationPlan(planID, startDate,endDate,price));
+    }
+    public boolean deleteCustomer(String email){
+        return dbHandler.deleteCustomer(email);
+    }
+    public boolean updateReview(int reviewID, String description){
+        return dbHandler.updateReview(reviewID,description);
+    }
+    public List<VacationPlan> selectVacationPrice(double price){
+        return dbHandler.selectVacationPrice(price);
+    }
+    public List<Integer> selectVacationDestination(String country){
+        return dbHandler.selectVacationDestination(country);
+    }
+    public List<ArrayList<String>> selectCruise(int rating){
+        return dbHandler.selectCruise(rating);
+    }
+    public double selectReviewAverage(int planID){
+        return dbHandler.selectReviewAverage(planID);
+    }
+    public List<ArrayList<Integer>> eventCount(){
+        return dbHandler.eventCount();
+    }
+    public List<VacationPlan> vacationBookedByAll(){
+        return dbHandler.vacationBookedByAll();
+    }
 
 
     public List<Booking> getBookings() {
