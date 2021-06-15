@@ -217,8 +217,8 @@ public class DatabaseConnectionHandler {
 //                    " (SELECT b.Customer_ID from Booking b" +
 //                    " WHERE c.Customer_ID = b.Customer_ID))");
 
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Vacation_Plan WHERE NOT EXISTS" +
-                    " (SELECT c.Customer_ID FROM Customer AS c LEFT JOIN Booking AS b ON c.Customer_ID = b.Customer_ID WHERE b.Customer_ID IS NULL)");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Vacation_Plan AS vp WHERE NOT EXISTS" +
+                    " (SELECT c.Customer_ID FROM Customer AS c LEFT JOIN Booking AS b ON c.Customer_ID = b.Customer_ID AND b.Plan_ID= vp.Plan_ID WHERE b.Customer_ID IS NULL)");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
