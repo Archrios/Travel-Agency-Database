@@ -109,7 +109,7 @@ public class BookingWindow extends JFrame implements ActionListener {
     }
 
     private void updateReviewAction() {
-        iw = new InputWindow(new FieldType[] {FieldType.INTEGER}, new String[] {"Review ID"}, 2, this);
+        iw = new InputWindow(new FieldType[] {FieldType.INTEGER, FieldType.STRING}, new String[] {"Review ID", "New Description"}, 2, this);
     }
 
     private void selectVacationPriceAction() {
@@ -179,7 +179,7 @@ public class BookingWindow extends JFrame implements ActionListener {
 
     private void handleUpdateReview(String[] inputs) {
         int reviewID = Integer.parseInt(inputs[0]);
-        actionDialogBox(delegate.updateReview(reviewID));
+        actionDialogBox(delegate.updateReview(reviewID, inputs[1]));
     }
 
     private void handleSelectVacationPrice(String[] inputs) {
