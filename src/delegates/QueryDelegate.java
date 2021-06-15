@@ -14,8 +14,8 @@ public interface QueryDelegate {
     public boolean updateReview(int reviewID, String description);
     public List<VacationPlan> selectVacationPrice(double price);
     public List<Integer> selectVacationDestination(String country);
-    public List<ArrayList<String>> selectCruise(int rating);
+    public List<List<String>> selectCruise(int rating);
     public double selectReviewAverage(int planID);
-    public List<ArrayList<Integer>> eventCount();
+    public List<List<Integer>> eventCount();
     public List<VacationPlan> vacationBookedByAll();
 }
