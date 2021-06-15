@@ -56,13 +56,13 @@ public class TravelAgency implements LoginDelegate, QueryDelegate {
     public List<Integer> selectVacationDestination(String country){
         return dbHandler.selectVacationDestination(country);
     }
-    public List<ArrayList<String>> selectCruise(int rating){
+    public List<List<String>> selectCruise(int rating){
         return dbHandler.selectCruise(rating);
     }
     public double selectReviewAverage(int planID){
         return dbHandler.selectReviewAverage(planID);
     }
-    public List<ArrayList<Integer>> eventCount(){
+    public List<List<Integer>> eventCount(){
         return dbHandler.eventCount();
     }
     public List<VacationPlan> vacationBookedByAll(){

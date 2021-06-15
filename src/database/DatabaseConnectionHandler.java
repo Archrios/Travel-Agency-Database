@@ -131,8 +131,8 @@ public class DatabaseConnectionHandler {
         return result;
     }
 
-    public List<ArrayList<String>> selectCruise(int rating) {
-        ArrayList<ArrayList<String>> result = new ArrayList<>();
+    public List<List<String>> selectCruise(int rating) {
+        ArrayList<List<String>> result = new ArrayList<List<String>>();
         try{
             PreparedStatement ps = connection.prepareStatement(
                     "SELECT Company_Name, Cruise_Model, Features " +
@@ -141,7 +141,7 @@ public class DatabaseConnectionHandler {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                ArrayList<String> list = new ArrayList<String>();
+                List<String> list = new ArrayList<String>();
                 String companyName = rs.getString("Company_Name");
                 String cruiseModel = rs.getString("Cruise_Model");
                 String features = rs.getString("Features");
@@ -184,15 +184,15 @@ public class DatabaseConnectionHandler {
         return reviewAverage;
     }
 
-    public List<ArrayList<Integer>> eventCount() {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+    public List<List<Integer>> eventCount() {
+        ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
         try{
             PreparedStatement ps = connection.prepareStatement(
                     "SELECT Count(Event_ID), Plan_ID FROM Scheduled_Events GROUP BY Plan_ID");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                ArrayList<Integer> list = new ArrayList<Integer>();
+                List<Integer> list = new ArrayList<Integer>();
                 Integer eventCount = rs.getInt("Count(EventID)");
                 Integer plan_ID = rs.getInt("Scheduled_Events");
                 list.add(eventCount);
