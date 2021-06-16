@@ -42,11 +42,11 @@ public class TravelAgency implements LoginDelegate, QueryDelegate {
     }
 
     public List<VacationPlan> displayVacationPlan() {
-        return null;
+        return dbHandler.displayVacationPlan();
     }
 
-    public List<Customer> displayCustomer(){return null;}
-    public List<Review> displayReview(){return null;}
+    public List<Customer> displayCustomer(){return dbHandler.displayCustomer();}
+    public List<Review> displayReview(){return dbHandler.displayReview();}
 
     public boolean insertVacationPlan(int planID, LocalDate startDate, LocalDate endDate, double price){
         return dbHandler.insertVacationPlan(new VacationPlan(planID, startDate,endDate,price));

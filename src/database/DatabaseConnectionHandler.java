@@ -1,5 +1,7 @@
 package database;
 
+import model.Customer;
+import model.Review;
 import model.VacationPlan;
 
 import java.io.BufferedReader;
@@ -31,6 +33,62 @@ public class DatabaseConnectionHandler {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
+    }
+
+    public List<VacationPlan> displayVacationPlan() {
+        ArrayList<VacationPlan> result = new ArrayList<VacationPlan>();
+        try{
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Vacation_Plan");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                VacationPlan vp = new VacationPlan(rs.getInt("Plan_ID"),
+                        rs.getDate("Start_Date").toLocalDate(), rs.getDate("End_Date").toLocalDate(),rs.getDouble("Price"));
+                result.add(vp);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e){
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+        return result;
+    }
+
+    public List<Customer> displayCustomer(){
+        ArrayList<Customer> result = new ArrayList<Customer>();
+        try{
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Customer_Account");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Customer c = new Customer(rs.getInt(1),rs.getString(2),rs.getString(3),
+                        rs.getInt(4), rs.getString(5));
+                result.add(c);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e){
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+        return result;
+    }
+    public List<Review> displayReview(){
+        ArrayList<Review> result = new ArrayList<Review>();
+        try{
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Review");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Review r = new Review(rs.getInt(1),rs.getDate(2).toLocalDate(),rs.getDouble(3),
+                        rs.getString(4), rs.getInt(5), rs.getInt(6));
+                result.add(r);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e){
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+        return result;
     }
 
     public boolean insertVacationPlan(VacationPlan vp) {

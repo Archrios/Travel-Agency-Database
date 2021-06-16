@@ -1,20 +1,21 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Review {
     private int reviewID;
-    private Date datePosted;
+    private LocalDate datePosted;
     private double rating;
-    private String Description;
+    private String description;
     private int reviewerCustomerID;
     private int planID;
 
-    public Review(int reviewID, Date datePosted, double rating, String description, int reviewerCustomerID, int planID) {
+    public Review(int reviewID, LocalDate datePosted, double rating, String description, int reviewerCustomerID, int planID) {
         this.reviewID = reviewID;
         this.datePosted = datePosted;
         this.rating = rating;
-        Description = description;
+        this.description = description;
         this.reviewerCustomerID = reviewerCustomerID;
         this.planID = planID;
     }
@@ -23,7 +24,7 @@ public class Review {
         return reviewID;
     }
 
-    public Date getDatePosted() {
+    public LocalDate getDatePosted() {
         return datePosted;
     }
 
@@ -32,7 +33,7 @@ public class Review {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public int getReviewerCustomerID() {
