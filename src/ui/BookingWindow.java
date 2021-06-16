@@ -31,7 +31,7 @@ public class BookingWindow extends JFrame implements ActionListener {
                 "Select Plan IDs by Country",
                 "Select Cruises by Rating",
                 "Get Average Review Rating of Vacation Plan",
-                "Get Number of Events For Each Vacation Plan",
+                "Get Number of 'Tasting' Events For Each Vacation Plan",
                 "Find Vacations that are Booked by All Users"
         };
     }

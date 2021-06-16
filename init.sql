@@ -1,25 +1,25 @@
-DROP TABLE Customer_Account;
-DROP TABLE Customer_Login;
-DROP TABLE Employee_Account;
-DROP TABLE Employee_Login;
-DROP TABLE Manages;
-DROP TABLE Vacation_Plan;
-DROP TABLE Booking;
-DROP TABLE Tourist_Attraction;
-DROP TABLE Transportation_Company;
-DROP TABLE Cruise;
-DROP TABLE Airline;
-DROP TABLE Destination;
-DROP TABLE Hotel;
+DROP TABLE Scheduled_Event;
+DROP TABLE Vacation_Event;
+DROP TABLE Vacation_Schedule;
 DROP TABLE Vacation_Transportation_Company;
 DROP TABLE Vacation_Destination;
 DROP TABLE Vacation_Hotel;
 DROP TABLE Vacation_Tourist_Attraction;
-DROP TABLE Vacation_Schedule;
-DROP TABLE Event;
-DROP TABLE Scheduled_Event;
-DROP TABLE Vacation_Event;
+DROP TABLE Cruise;
+DROP TABLE Airline;
+DROP TABLE Transportation_Company;
 DROP TABLE Review;
+DROP TABLE Tourist_Attraction;
+DROP TABLE Destination;
+DROP TABLE Hotel;
+DROP TABLE Event;
+DROP TABLE Booking;
+DROP TABLE Manages;
+DROP TABLE Vacation_Plan;
+DROP TABLE Customer_Account;
+DROP TABLE Employee_Account;
+DROP TABLE Employee_Login;
+DROP TABLE Customer_Login;
 
 
 CREATE TABLE Customer_Login(
@@ -358,17 +358,27 @@ VALUES
 (16002, "15002", "2021-08-11"),
 (16003, "Wow", "2021-11-03"),
 (16004, "Such", "2021-07-24"),
-(16005, "Trip", "2022-01-05");
+(16005, "Trip", "2022-01-05"),
+(16006, "Wine Tasting", "2021-06-16"),
+(16007, "Beer Tasting", "2021-06-17"),
+(16008, "Sake Tasting", "2021-06-18"),
+(16009, "Soju Tasting", "2021-06-19");
 
 
 INSERT INTO Vacation_Event(Plan_ID, Schedule_ID, Event_ID) 
 VALUES
 (10001, 15001, 16001),
+(10001, 15001, 16007),
+(10001, 15001, 16008),
 (10002, 15002, 16002),
+(10002, 15002, 16008),
+(10002, 15002, 16006),
 (10003, 15003, 16003),
 (10004, 15004, 16004),
 (10005, 15005, 16005),
-(10001, 15001, 16002);
+(10005, 15005, 16006),
+(10005, 15005, 16008),
+(10005, 15005, 16009);
 
 INSERT INTO Review (Review_ID, Date_Posted, Rating, Description, Reviewer_Customer_ID, Plan_ID) 
 VALUES

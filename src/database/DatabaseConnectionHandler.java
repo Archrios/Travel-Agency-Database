@@ -257,7 +257,7 @@ public class DatabaseConnectionHandler {
         ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
         try{
             PreparedStatement ps = connection.prepareStatement(
-                    "SELECT Count(Event_ID), Plan_ID FROM Vacation_Event GROUP BY Plan_ID");
+                    "Select Count(Event_ID), Plan_ID from (Select * from Vacation_Event Natural Join Event where Description LIKE '%Tasting%') as Events Group by Plan_ID");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
