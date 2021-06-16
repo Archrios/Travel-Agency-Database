@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,24 +33,12 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public boolean databaseSetup(){
-        ScriptRunner sr = new ScriptRunner(connection, false, false);
-        String file = "init.sql";
-        try {
-            sr.runScript(new BufferedReader((new FileReader(file))));
-            return true;
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public boolean insertVacationPlan(VacationPlan vp) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO Vacation_Plan VALUES (?,?,?,?)");
             ps.setInt(1, vp.getPlanID());
-            ps.setDate(2, (Date) vp.getStartDate());
-            ps.setDate(3, (Date) vp.getEndDate());
+            ps.setDate(2,  java.sql.Date.valueOf(vp.getStartDate()));
+            ps.setDate(3, java.sql.Date.valueOf(vp.getEndDate()));
             ps.setDouble(4, vp.getPrice());
             ps.executeUpdate();
             connection.commit();
@@ -108,13 +98,13 @@ public class DatabaseConnectionHandler {
     public List<VacationPlan> selectVacationPrice(double price) {
         ArrayList<VacationPlan> result = new ArrayList<VacationPlan>();
         try{
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Vacation_Plan WHERE Price < ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Vacation_Plan WHERE Price <= ?");
             ps.setDouble(1,price);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 VacationPlan vp = new VacationPlan(rs.getInt("Plan_ID"),
-                        rs.getDate("Start_Date"), rs.getDate("End_Date"),rs.getDouble("Price"));
+                        rs.getDate("Start_Date").toLocalDate(), rs.getDate("End_Date").toLocalDate(),rs.getDouble("Price"));
                 result.add(vp);
             }
             rs.close();
@@ -151,7 +141,7 @@ public class DatabaseConnectionHandler {
         ArrayList<List<String>> result = new ArrayList<List<String>>();
         try{
             PreparedStatement ps = connection.prepareStatement(
-                    "SELECT Company_Name, Cruise_Model, Features " +
+                    "SELECT Company_Name, Rating, Cruise_Model, Features " +
                             "FROM Transportation_Company NATURAL JOIN Cruise WHERE Transportation_Company.Rating >= ?");
             ps.setInt(1,rating);
 
@@ -159,9 +149,11 @@ public class DatabaseConnectionHandler {
             while (rs.next()){
                 List<String> list = new ArrayList<String>();
                 String companyName = rs.getString("Company_Name");
+                String Rating = String.valueOf(rs.getInt("Rating"));
                 String cruiseModel = rs.getString("Cruise_Model");
                 String features = rs.getString("Features");
                 list.add(companyName);
+                list.add(Rating);
                 list.add(cruiseModel);
                 list.add(features);
                 result.add(list);
@@ -248,7 +240,7 @@ public class DatabaseConnectionHandler {
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 VacationPlan vp = new VacationPlan(rs.getInt("Plan_ID"),
-                        rs.getDate("Start_Date"), rs.getDate("End_Date"),rs.getDouble("Price"));
+                        rs.getDate("Start_Date").toLocalDate(), rs.getDate("End_Date").toLocalDate(),rs.getDouble("Price"));
                 result.add(vp);
             }
             rs.close();

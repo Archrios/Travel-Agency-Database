@@ -11,6 +11,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -167,11 +169,11 @@ public class BookingWindow extends JFrame implements ActionListener {
     }
 
     private void handleInsertVacationPlan(String[] inputs) {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
         try {
             int planID = Integer.parseInt(inputs[0]);
-            Date startDate = format.parse(inputs[1]);
-            Date endDate = format.parse(inputs[2]);
+            LocalDate startDate = LocalDate.parse(inputs[1],formatter);
+            LocalDate endDate = LocalDate.parse(inputs[2],formatter);
             double price = Double.parseDouble(inputs[3]);
 
             actionDialogBox(delegate.insertVacationPlan(planID, startDate, endDate, price));
@@ -203,8 +205,8 @@ public class BookingWindow extends JFrame implements ActionListener {
         for (int i = 0; i < result.size(); i++) {
             VacationPlan plan = result.get(i);
             data[i][0] = plan.getPlanID();
-            data[i][1] = format.format(plan.getStartDate());
-            data[i][2] = format.format(plan.getEndDate());
+            data[i][1] = plan.getStartDate().toString();
+            data[i][2] = plan.getEndDate().toString();
             data[i][3] = plan.getPrice();
         }
         OutputWindow ow = new OutputWindow(data, columnNames);
@@ -233,12 +235,13 @@ public class BookingWindow extends JFrame implements ActionListener {
             return;
         }
 
-        Object[][] data = new Object[result.size()][3];
-        String[] columnNames = {"Company Name", "Cruise Model", "Features"};
+        Object[][] data = new Object[result.size()][4];
+        String[] columnNames = {"Company Name", "Rating", "Cruise Model", "Features"};
         for (int i = 0; i < result.size(); i++) {
             data[i][0] = result.get(i).get(0);
             data[i][1] = result.get(i).get(1);
             data[i][2] = result.get(i).get(2);
+            data[i][3] = result.get(i).get(3);
         }
         OutputWindow ow = new OutputWindow(data, columnNames);
     }
@@ -284,8 +287,8 @@ public class BookingWindow extends JFrame implements ActionListener {
         for (int i = 0; i < result.size(); i++) {
             VacationPlan plan = result.get(i);
             data[i][0] = plan.getPlanID();
-            data[i][1] = format.format(plan.getStartDate());
-            data[i][2] = format.format(plan.getEndDate());
+            data[i][1] = plan.getStartDate().toString();
+            data[i][2] = plan.getEndDate().toString();
             data[i][3] = plan.getPrice();
         }
         OutputWindow ow = new OutputWindow(data, columnNames);

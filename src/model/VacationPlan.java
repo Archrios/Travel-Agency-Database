@@ -1,15 +1,15 @@
 package model;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class VacationPlan {
     private int  planID;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private double price;
 
-    public VacationPlan(int planID, Date startDate, Date endDate, double price) {
+    public VacationPlan(int planID, LocalDate startDate, LocalDate endDate, double price) {
         this.planID = planID;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -20,11 +20,11 @@ public class VacationPlan {
         return planID;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
