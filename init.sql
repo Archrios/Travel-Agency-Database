@@ -1,5 +1,5 @@
-DROP TABLE Customer_Login;
 DROP TABLE Customer_Account;
+DROP TABLE Customer_Login;
 DROP TABLE Employee_Account;
 DROP TABLE Employee_Login;
 DROP TABLE Manages;

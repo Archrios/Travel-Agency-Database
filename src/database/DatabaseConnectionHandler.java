@@ -3,7 +3,6 @@ package database;
 import model.VacationPlan;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
@@ -183,19 +182,23 @@ public class DatabaseConnectionHandler {
     *
     */
     public double selectReviewAverage(int planID) {
-        double reviewAverage=-1;
+        double reviewAverage = -1;
         try{
-            PreparedStatement ps = connection.prepareStatement("SELECT AVG(Rating) FROM Review WHERE Plan_ID = ?" );
+            PreparedStatement ps = connection.prepareStatement("SELECT AVG(Rating) as Average FROM Review WHERE Plan_ID = ?" );
             ps.setInt(1,planID);
 
             ResultSet rs = ps.executeQuery();
+
+            rs.first();
             //THIS LINE
             //go by column label of AVG(Rating) or go by index of 1?
             //reviewAverage = rs.getDouble("AVG(Rating)");
-            reviewAverage = rs.getDouble(1);
+            reviewAverage = rs.getDouble("Average");
+            System.out.println("here2");
             rs.close();
             ps.close();
         } catch (SQLException e){
+            e.printStackTrace();
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
         return reviewAverage;

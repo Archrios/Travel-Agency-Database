@@ -248,10 +248,11 @@ public class BookingWindow extends JFrame implements ActionListener {
         double result = delegate.selectReviewAverage(planID);
         if (result == -1) {
             actionDialogBox(false);
-            return;
+        } else if (result == 0) {
+            JOptionPane.showMessageDialog(this, "There are no reviews for this plan");
+        } else {
+            JOptionPane.showMessageDialog(this, "The average rating is " + result);
         }
-
-        JOptionPane.showMessageDialog(this, "The average rating is " + result);
     }
 
     private void handleSelectEventCount() {
