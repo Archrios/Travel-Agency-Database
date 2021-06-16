@@ -5,11 +5,14 @@ import model.*;
 import java.time.LocalDate;
 
 public interface QueryDelegate {
-    public boolean databaseSetup();
 
     public boolean insertVacationPlan(int planID, LocalDate startDate, LocalDate endDate, double price);
     public boolean deleteCustomer(String email);
     public boolean updateReview(int reviewID, String description);
+    public List<VacationPlan> displayVacationPlan();
+    public List<Customer> displayCustomer();
+    public List<Review> displayReview();
+
     public List<VacationPlan> selectVacationPrice(double price);
     public List<Integer> selectVacationDestination(String country);
     public List<List<String>> selectCruise(int rating);
