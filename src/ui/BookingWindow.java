@@ -1,6 +1,8 @@
 package ui;
 
 import delegates.QueryDelegate;
+import model.Customer;
+import model.Review;
 import model.VacationPlan;
 
 import javax.swing.*;
@@ -9,11 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -62,6 +61,7 @@ public class BookingWindow extends JFrame implements ActionListener {
             mainPanel.add(button);
         }
         setContentPane(mainPanel);
+        setupMenuBar();
 
         setResizable(false);
         addWindowListener(new WindowAdapter() {
@@ -72,6 +72,24 @@ public class BookingWindow extends JFrame implements ActionListener {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    private void setupMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Tables");
+        JMenuItem vacationPlanItem = new JMenuItem("Vacation Plan");
+        JMenuItem customerItem = new JMenuItem("Customer");
+        JMenuItem reviewItem = new JMenuItem("Reviews");
+
+        vacationPlanItem.addActionListener(this);
+        customerItem.addActionListener(this);
+        reviewItem.addActionListener(this);
+
+        menu.add(vacationPlanItem);
+        menu.add(customerItem);
+        menu.add(reviewItem);
+        menuBar.add(menu);
+        setJMenuBar(menuBar);
     }
 
     @Override
@@ -104,6 +122,15 @@ public class BookingWindow extends JFrame implements ActionListener {
                 break;
             case "8":
                 handleSelectVacationAll();
+                break;
+            case "Vacation Plan":
+                handleDisplayVacations();
+                break;
+            case "Customer":
+                handleDisplayCustomers();
+                break;
+            case "Reviews":
+                handleDisplayReviews();
                 break;
         }
     }
@@ -201,7 +228,6 @@ public class BookingWindow extends JFrame implements ActionListener {
 
         Object[][] data = new Object[result.size()][4];
         String[] columnNames = {"Plan ID", "Start Date", "End Date", "Price"};
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         for (int i = 0; i < result.size(); i++) {
             VacationPlan plan = result.get(i);
             data[i][0] = plan.getPlanID();
@@ -271,7 +297,7 @@ public class BookingWindow extends JFrame implements ActionListener {
             data[i][0] = result.get(i).get(0);
             data[i][1] = result.get(i).get(1);
         }
-        OutputWindow ow = new OutputWindow(data, columnNames);
+        new OutputWindow(data, columnNames);
     }
 
     private void handleSelectVacationAll() {
@@ -283,13 +309,72 @@ public class BookingWindow extends JFrame implements ActionListener {
 
         Object[][] data = new Object[result.size()][4];
         String[] columnNames = {"Plan ID", "Start Date", "End Date", "Price"};
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         for (int i = 0; i < result.size(); i++) {
             VacationPlan plan = result.get(i);
             data[i][0] = plan.getPlanID();
             data[i][1] = plan.getStartDate().toString();
             data[i][2] = plan.getEndDate().toString();
             data[i][3] = plan.getPrice();
+        }
+        new OutputWindow(data, columnNames);
+    }
+
+    private void handleDisplayVacations() {
+        List<VacationPlan> result = delegate.displayVacationPlan();
+        if (result == null) {
+            actionDialogBox(false);
+            return;
+        }
+
+        Object[][] data = new Object[result.size()][4];
+        String[] columnNames = {"Plan ID", "Start Date", "End Date", "Price"};
+        for (int i = 0; i < result.size(); i++) {
+            VacationPlan plan = result.get(i);
+            data[i][0] = plan.getPlanID();
+            data[i][1] = plan.getStartDate().toString();
+            data[i][2] = plan.getEndDate().toString();
+            data[i][3] = plan.getPrice();
+        }
+        new OutputWindow(data, columnNames);
+    }
+
+    private void handleDisplayCustomers() {
+        List<Customer> result = delegate.displayCustomer();
+        if (result == null) {
+            actionDialogBox(false);
+            return;
+        }
+
+        Object[][] data = new Object[result.size()][5];
+        String[] columnNames = {"Customer ID", "First Name", "Last Name", "Account Tier", "Email"};
+        for (int i = 0; i < result.size(); i++) {
+            Customer customer = result.get(i);
+            data[i][0] = customer.getCustomerID();
+            data[i][1] = customer.getFirstName();
+            data[i][2] = customer.getLastName();
+            data[i][3] = customer.getAccountTier();
+            data[i][4] = customer.getEmail();
+        }
+        new OutputWindow(data, columnNames);
+    }
+
+    private void handleDisplayReviews() {
+        List<Review> result = delegate.displayReview();
+        if (result == null) {
+            actionDialogBox(false);
+            return;
+        }
+
+        Object[][] data = new Object[result.size()][6];
+        String[] columnNames = {"Review ID", "Plan ID", "Reviewer ID", "Rating", "Date Posted", "Description"};
+        for (int i = 0; i < result.size(); i++) {
+            Review review = result.get(i);
+            data[i][0] = review.getReviewID();
+            data[i][1] = review.getPlanID();
+            data[i][2] = review.getReviewerCustomerID();
+            data[i][3] = review.getRating();
+            data[i][4] = review.getDatePosted().toString();
+            data[i][5] = review.getDescription();
         }
         new OutputWindow(data, columnNames);
     }
