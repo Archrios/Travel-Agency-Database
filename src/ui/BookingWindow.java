@@ -207,7 +207,7 @@ public class BookingWindow extends JFrame implements ActionListener {
             data[i][2] = format.format(plan.getEndDate());
             data[i][3] = plan.getPrice();
         }
-        OutputWindow ow = new OutputWindow(data, columnNames);
+        new OutputWindow(data, columnNames);
     }
 
     private void handleSelectVacationDestination(String[] inputs) {
@@ -222,7 +222,7 @@ public class BookingWindow extends JFrame implements ActionListener {
         for (int i = 0; i < result.size(); i++) {
             data[i][0] = result.get(i);
         }
-        OutputWindow ow = new OutputWindow(data, columnNames);
+        new OutputWindow(data, columnNames);
     }
 
     private void handleSelectCruise(String[] inputs) {
@@ -240,7 +240,7 @@ public class BookingWindow extends JFrame implements ActionListener {
             data[i][1] = result.get(i).get(1);
             data[i][2] = result.get(i).get(2);
         }
-        OutputWindow ow = new OutputWindow(data, columnNames);
+        new OutputWindow(data, columnNames);
     }
 
     private void handleSelectReviewAverage(String[] inputs) {
@@ -288,7 +288,7 @@ public class BookingWindow extends JFrame implements ActionListener {
             data[i][2] = format.format(plan.getEndDate());
             data[i][3] = plan.getPrice();
         }
-        OutputWindow ow = new OutputWindow(data, columnNames);
+        new OutputWindow(data, columnNames);
     }
 
     private void actionDialogBox(boolean isSuccessful) {
