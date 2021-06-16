@@ -1,3 +1,27 @@
+DROP TABLE Customer_Login;
+DROP TABLE Customer_Account;
+DROP TABLE Employee_Account;
+DROP TABLE Employee_Login;
+DROP TABLE Manages;
+DROP TABLE Vacation_Plan;
+DROP TABLE Booking;
+DROP TABLE Tourist_Attraction;
+DROP TABLE Transportation_Company;
+DROP TABLE Cruise;
+DROP TABLE Airline;
+DROP TABLE Destination;
+DROP TABLE Hotel;
+DROP TABLE Vacation_Transportation_Company;
+DROP TABLE Vacation_Destination;
+DROP TABLE Vacation_Hotel;
+DROP TABLE Vacation_Tourist_Attraction;
+DROP TABLE Vacation_Schedule;
+DROP TABLE Event;
+DROP TABLE Scheduled_Event;
+DROP TABLE Vacation_Event;
+DROP TABLE Review;
+
+
 CREATE TABLE Customer_Login(
 	Email CHAR(30) PRIMARY KEY,
 	Password CHAR(30)
@@ -279,7 +303,11 @@ VALUES
 (20002, 2, 2, 18002, 19002, 10002),
 (20003, 7, 0, 18003, 19003, 10003),
 (20004, 2, 5, 18004, 19004, 10004),
-(20005, 2, 0, 18005, 19005, 10005);
+(20005, 2, 0, 18005, 19005, 10005),
+(20006, 1, 0, 18002, 19001, 10001),
+(20007, 1, 0, 18003, 19001, 10001),
+(20008, 1, 0, 18004, 19001, 10001),
+(20009, 1, 0, 18005, 19001, 10001);
 
 
 
@@ -339,11 +367,13 @@ VALUES
 (10002, 15002, 16002),
 (10003, 15003, 16003),
 (10004, 15004, 16004),
-(10005, 15005, 16005);
+(10005, 15005, 16005),
+(10001, 15001, 16002);
 
 INSERT INTO Review (Review_ID, Date_Posted, Rating, Description, Reviewer_Customer_ID, Plan_ID) 
 VALUES
 (17001, "2021-07-01", 3, "Apple Pie", 18001, 10001),
+(17006, "2021-07-02", 4, "Apple Pie good", 18001, 10001),
 (17002, "2021-08-11", 2, "15002", 18002, 10002),
 (17003, "2021-11-03", 5, "Good", 18003, 10003),
 (17004, "2021-07-24", 1, "Not Good", 18004, 10004),

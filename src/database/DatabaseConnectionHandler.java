@@ -2,9 +2,14 @@ package database;
 
 import model.VacationPlan;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class DatabaseConnectionHandler {
     private static final String MYSQL_URL = "jdbc:mysql://localhost/traveldb";
@@ -27,9 +32,21 @@ public class DatabaseConnectionHandler {
         }
     }
 
+    public boolean databaseSetup(){
+        ScriptRunner sr = new ScriptRunner(connection, false, false);
+        String file = "init.sql";
+        try {
+            sr.runScript(new BufferedReader((new FileReader(file))));
+            return true;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean insertVacationPlan(VacationPlan vp) {
         try {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO VacationPlan VALUES (?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO Vacation_Plan VALUES (?,?,?,?)");
             ps.setInt(1, vp.getPlanID());
             ps.setDate(2, (Date) vp.getStartDate());
             ps.setDate(3, (Date) vp.getEndDate());
@@ -49,7 +66,7 @@ public class DatabaseConnectionHandler {
 
     public boolean deleteCustomer(String email) {
         try {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM Customer WHERE Email = ?");
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM Customer_Account WHERE Email = ?");
             ps.setString(1, email);
 
             int rowCount = ps.executeUpdate();
@@ -92,7 +109,7 @@ public class DatabaseConnectionHandler {
     public List<VacationPlan> selectVacationPrice(double price) {
         ArrayList<VacationPlan> result = new ArrayList<VacationPlan>();
         try{
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Vacation_Plan WHERE Price = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Vacation_Plan WHERE Price < ?");
             ps.setDouble(1,price);
 
             ResultSet rs = ps.executeQuery();
@@ -136,7 +153,7 @@ public class DatabaseConnectionHandler {
         try{
             PreparedStatement ps = connection.prepareStatement(
                     "SELECT Company_Name, Cruise_Model, Features " +
-                            "FROM Transportation_Company NATURAL JOIN Cruise WHERE Transportation_Company.Rating > ?");
+                            "FROM Transportation_Company NATURAL JOIN Cruise WHERE Transportation_Company.Rating >= ?");
             ps.setInt(1,rating);
 
             ResultSet rs = ps.executeQuery();
@@ -168,14 +185,14 @@ public class DatabaseConnectionHandler {
     public double selectReviewAverage(int planID) {
         double reviewAverage=-1;
         try{
-            PreparedStatement ps = connection.prepareStatement("SELECT AVG(Rating) FROM Review WHERE Plan_ID = ?");
-            ps.setDouble(1,planID);
+            PreparedStatement ps = connection.prepareStatement("SELECT AVG(Rating) FROM Review WHERE Plan_ID = ?" );
+            ps.setInt(1,planID);
 
             ResultSet rs = ps.executeQuery();
             //THIS LINE
             //go by column label of AVG(Rating) or go by index of 1?
-            reviewAverage = rs.getDouble("AVG(Rating)");
-            //reviewAverage = rs.getDouble(1);
+            //reviewAverage = rs.getDouble("AVG(Rating)");
+            reviewAverage = rs.getDouble(1);
             rs.close();
             ps.close();
         } catch (SQLException e){
@@ -188,13 +205,14 @@ public class DatabaseConnectionHandler {
         ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
         try{
             PreparedStatement ps = connection.prepareStatement(
-                    "SELECT Count(Event_ID), Plan_ID FROM Scheduled_Events GROUP BY Plan_ID");
+                    "SELECT Count(Event_ID), Plan_ID FROM Vacation_Event GROUP BY Plan_ID");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 List<Integer> list = new ArrayList<Integer>();
-                Integer eventCount = rs.getInt("Count(EventID)");
-                Integer plan_ID = rs.getInt("Scheduled_Events");
+                //Integer eventCount = rs.getInt("Count(EventID)");
+                Integer eventCount = rs.getInt(1);
+                Integer plan_ID = rs.getInt("Plan_ID");
                 list.add(eventCount);
                 list.add(plan_ID);
                 result.add(list);
@@ -217,8 +235,13 @@ public class DatabaseConnectionHandler {
 //                    " (SELECT b.Customer_ID from Booking b" +
 //                    " WHERE c.Customer_ID = b.Customer_ID))");
 
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Vacation_Plan AS vp WHERE NOT EXISTS" +
-                    " (SELECT c.Customer_ID FROM Customer AS c LEFT JOIN Booking AS b ON c.Customer_ID = b.Customer_ID AND b.Plan_ID= vp.Plan_ID WHERE b.Customer_ID IS NULL)");
+//            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Vacation_Plan vp WHERE NOT EXISTS" +
+//                    " (SELECT c.Customer_ID FROM Customer_Account c LEFT JOIN Booking b ON c.Customer_ID = b.Customer_ID AND b.Plan_ID= vp.Plan_ID WHERE b.Customer_ID IS NULL)");
+
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM Vacation_Plan vp WHERE NOT EXISTS " +
+                    "(SELECT c.Customer_ID from Customer_Account c WHERE NOT EXISTS (SELECT b.Customer_ID from Booking b WHERE c.Customer_ID = b.Customer_ID AND b.Plan_ID = vp.Plan_ID))");
+
+
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()){

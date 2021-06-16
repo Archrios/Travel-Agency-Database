@@ -7,8 +7,8 @@ import model.*;
 import ui.BookingWindow;
 import ui.LoginWindow;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TravelAgency implements LoginDelegate, QueryDelegate {
@@ -40,6 +40,9 @@ public class TravelAgency implements LoginDelegate, QueryDelegate {
         }
     }
 
+    public boolean databaseSetup() {
+        return false;
+    }
 
     public boolean insertVacationPlan(int planID, Date startDate, Date endDate, double price){
         return dbHandler.insertVacationPlan(new VacationPlan(planID, startDate,endDate,price));

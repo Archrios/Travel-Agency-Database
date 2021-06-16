@@ -2,12 +2,13 @@ package delegates;
 
 import model.Booking;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import model.*;
 
 public interface QueryDelegate {
+    public boolean databaseSetup();
 
     public boolean insertVacationPlan(int planID, Date startDate, Date endDate, double price);
     public boolean deleteCustomer(String email);
