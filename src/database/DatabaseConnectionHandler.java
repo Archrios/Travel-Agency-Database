@@ -194,7 +194,6 @@ public class DatabaseConnectionHandler {
             //go by column label of AVG(Rating) or go by index of 1?
             //reviewAverage = rs.getDouble("AVG(Rating)");
             reviewAverage = rs.getDouble("Average");
-            System.out.println("here2");
             rs.close();
             ps.close();
         } catch (SQLException e){
